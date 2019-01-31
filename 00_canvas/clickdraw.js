@@ -12,9 +12,8 @@ var clear = function clr_canvas() {
 
 var rectangle = function make_rect(x, y) {
 
-    context.fillStyle = "#ffffff"
+    context.fillStyle = "#ff0000"
     context.fillRect(x, y, 100, 200)
-    state = 1
 };
 
 var dot = function make_dot(x, y) {
@@ -23,7 +22,6 @@ var dot = function make_dot(x, y) {
     context.beginPath()
     context.ellipse(x, y, 10, 10, 360, 0, 360)
     context.fill()
-    state = 0
     console.log("ellipse made")
 
 };
@@ -41,8 +39,10 @@ c.addEventListener('click', function(e) {
 swi.addEventListener('click', function() {
   if (state==0) {
         swi.innerHTML = "Draw dot"
+        state = 1
     }
     else{
         swi.innerHTML = "Draw rect"
+        state = 0
     }
 })
