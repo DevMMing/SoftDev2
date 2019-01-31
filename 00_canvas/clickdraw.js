@@ -22,7 +22,6 @@ var dot = function make_dot(x, y) {
     context.beginPath()
     context.ellipse(x, y, 10, 10, 360, 0, 360)
     context.fill()
-    console.log("ellipse made")
 
 };
 cleS.addEventListener("click", clear )
