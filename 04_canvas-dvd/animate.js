@@ -1,7 +1,7 @@
 // Shafakor: Shafali Gupta, Aleksandra Koroza
 // SoftDev2 pd8
-// K #03: They lock us in the tower whenever we get caught
-// 2019-02-05
+// K #04: What is it saving the screen from?
+// 2019-02-06
 
 // get canvas element
 var c = document.getElementById("playground");
@@ -52,30 +52,6 @@ var drawDot=function(){
 	 ctx.fill();
 
 	 requestID = window.requestAnimationFrame( drawDot );
-	// if (growing){
-	// 	//clear not too necessary here since every subsequent dot just draws over previous.
-	// 	clear(ctx);
-	// 	//draw the dot given augmented radius
-	// 	radius+= 5;
-	// 	drawEllipse(radius);
-	// 	// manipulate growing state variable as necessary
-	// 	if (radius == c.width){
-	// 		growing= false;
-	// 	}
-	// }
-	// if (! growing){
-	// 	// clearing necessary here since previous larger circles should not be present.
-	// 	clear(ctx);
-	// 	//draw the dot given smaller radius
-	// 	radius-= 5;
-	// 	drawEllipse(radius);
-	// 	// manipulate growing state variable as necessary
-	// 	if (radius <= 0){
-	// 		growing= true;
-	// 	}
-	// }
-	// // executes on next available screen repaint and facilitates animation
-	// requestID= window.requestAnimationFrame(drawDot);
 };
 // Stops the animation from happening
 var stopIt= function() {
@@ -83,60 +59,8 @@ var stopIt= function() {
 	window.cancelAnimationFrame(requestID);
 };
 
-
-
-
 dotButton.addEventListener("click",drawDot);
 stopButton.addEventListener("click",stopIt);
-
-
-//
-// var dvdLogoSetup= function(){
-// 	//clear(ctx);
-// 	window.cancelAnimationFrame(requestID);
-// 	var rectWidth= 100;
-// 	var rectHeight = 50;
-//
-// 	var rectX = Math.floor( Math.random() * (c.width- rectWidth));
-// 	var rectY = Math.floor( Math.random() * (c.height- rectHeight));
-//
-// 	var xVel = 1;
-// 	var yVel = 1;
-//
-//
-// 	var logo = new Image();
-// 	logo.src = "logo_dvd.jpg";
-// 	ctx.drawImage(logo,rectX,rectY,rectWidth, rectHeight);
-//
-// 	var dvdLogo = function(){
-// 		clear(ctx)
-// 		ctx.beginPath();
-// 	// 	while (logo.offsetX+xVel < c.height){
-// 	// 	xVel++;
-// 	// 	yVel++;
-// 	// }
-// 		requestID = window.requestAnimationFrame(dvdLogo);
-// 	}
-//
-// 	dvdLogo();
-// }
-//
-//   // var dvdLogo = function(){
-// 	// 	ctx.beginPath();
-// 	// 	ctx.moveTo(logo.offsetX+xVel, logo.offsetY+yVel)
-// 	// 	requestID = window.requestAnimationFrame(dvdLogoSetup);
-//   //   dvdLogo();
-// 	// }
-//
-// //var dvdMove= function(){
-//     //if
-//     //logo.moveTo(
-// //}
-// //var dvd_does_stuff = function(){
-//     //dvdlogoSetup();
-//
-// dvd_but.addEventListener("click",dvdLogoSetup);
-
 
 var dvdLogoSetup = function(){
   window.cancelAnimationFrame(requestID);
@@ -149,23 +73,20 @@ var dvdLogoSetup = function(){
   var logo = new Image();
   logo.src = "logo_dvd.jpg";
   var dvdLogo = function(){
-    // if (requestID){
-    //   stopIt();
-    // }
     clear(ctx);
     ctx.drawImage(logo, rectX, rectY, rectWidth, rectHeight);
-
-    if (rectX>=c.width-rectWidth){
-			rectX-=xVel;
+		console.log(rectX )
+    if (rectX>=c.width-rectWidth){ //if it's going to go out of canvas
+			xVel=-1*xVel;
      }
 		if (rectX<0){
-			rectX+=xVel;
+			xVel=Math.abs(xVel); //makes sure that the xVel is positive
 			}
-     if (rectY>=c.height-rectHeight){
-      rectY-=yVel;
+     if (rectY>=c.height-rectHeight){ //if it's going to go out of canvas
+      yVel= -1* yVel;
      }
 		 if (rectY<0){
-			 rectY-=yVel;
+			 yVel = Math.abs(yVel); //makes sure that the yVel is positive
 			 }
 			rectX+=xVel
 			rectY+=yVel
@@ -174,6 +95,6 @@ var dvdLogoSetup = function(){
   dvdLogo();
 }
 dvdButton = document.getElementById("dvd");
-dvdButton.addEventListener("click",// function(e){
-dvdLogoSetup//();
+dvdButton.addEventListener("click",
+dvdLogoSetup
 )
