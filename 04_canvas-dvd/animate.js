@@ -29,30 +29,53 @@ var drawEllipse = function(r){
 
 // Function animates dot using state variable growing
 var drawDot=function(){
-	if (growing){
-		//clear not too necessary here since every subsequent dot just draws over previous.
-		clear(ctx);
-		//draw the dot given augmented radius
-		radius+= 5;
-		drawEllipse(radius);
-		// manipulate growing state variable as necessary
-		if (radius == c.width){
-			growing= false;
-		}
-	}
-	if (! growing){
-		// clearing necessary here since previous larger circles should not be present.
-		clear(ctx);
-		//draw the dot given smaller radius
-		radius-= 5;
-		drawEllipse(radius);
-		// manipulate growing state variable as necessary
-		if (radius <= 0){
-			growing= true;
-		}
-	}
-	// executes on next available screen repaint and facilitates animation
-	requestID= window.requestAnimationFrame(drawDot);
+	window.cancelAnimationFrame( requestID );
+
+	clear(ctx);
+	 if ( growing ) {
+ radius += 1;
+	 }
+	 else {
+ radius -= 1;
+	 }
+
+	 if ( radius == (c.width / 2) )
+ growing = false;
+	 else if ( radius == 0 ) {
+ growing = true;
+	 }
+
+	 //draw the dot
+	 ctx.beginPath();
+	 ctx.arc( c.width / 2, c.height / 2, radius, 0, 2 * Math.PI );
+	 ctx.stroke();
+	 ctx.fill();
+
+	 requestID = window.requestAnimationFrame( drawDot );
+	// if (growing){
+	// 	//clear not too necessary here since every subsequent dot just draws over previous.
+	// 	clear(ctx);
+	// 	//draw the dot given augmented radius
+	// 	radius+= 5;
+	// 	drawEllipse(radius);
+	// 	// manipulate growing state variable as necessary
+	// 	if (radius == c.width){
+	// 		growing= false;
+	// 	}
+	// }
+	// if (! growing){
+	// 	// clearing necessary here since previous larger circles should not be present.
+	// 	clear(ctx);
+	// 	//draw the dot given smaller radius
+	// 	radius-= 5;
+	// 	drawEllipse(radius);
+	// 	// manipulate growing state variable as necessary
+	// 	if (radius <= 0){
+	// 		growing= true;
+	// 	}
+	// }
+	// // executes on next available screen repaint and facilitates animation
+	// requestID= window.requestAnimationFrame(drawDot);
 };
 // Stops the animation from happening
 var stopIt= function() {
@@ -60,43 +83,97 @@ var stopIt= function() {
 	window.cancelAnimationFrame(requestID);
 };
 
-    
+
 
 
 dotButton.addEventListener("click",drawDot);
 stopButton.addEventListener("click",stopIt);
 
 
+//
+// var dvdLogoSetup= function(){
+// 	//clear(ctx);
+// 	window.cancelAnimationFrame(requestID);
+// 	var rectWidth= 100;
+// 	var rectHeight = 50;
+//
+// 	var rectX = Math.floor( Math.random() * (c.width- rectWidth));
+// 	var rectY = Math.floor( Math.random() * (c.height- rectHeight));
+//
+// 	var xVel = 1;
+// 	var yVel = 1;
+//
+//
+// 	var logo = new Image();
+// 	logo.src = "logo_dvd.jpg";
+// 	ctx.drawImage(logo,rectX,rectY,rectWidth, rectHeight);
+//
+// 	var dvdLogo = function(){
+// 		clear(ctx)
+// 		ctx.beginPath();
+// 	// 	while (logo.offsetX+xVel < c.height){
+// 	// 	xVel++;
+// 	// 	yVel++;
+// 	// }
+// 		requestID = window.requestAnimationFrame(dvdLogo);
+// 	}
+//
+// 	dvdLogo();
+// }
+//
+//   // var dvdLogo = function(){
+// 	// 	ctx.beginPath();
+// 	// 	ctx.moveTo(logo.offsetX+xVel, logo.offsetY+yVel)
+// 	// 	requestID = window.requestAnimationFrame(dvdLogoSetup);
+//   //   dvdLogo();
+// 	// }
+//
+// //var dvdMove= function(){
+//     //if
+//     //logo.moveTo(
+// //}
+// //var dvd_does_stuff = function(){
+//     //dvdlogoSetup();
+//
+// dvd_but.addEventListener("click",dvdLogoSetup);
 
-var dvdLogoSetup= function(){
-  	clear(ctx);
-	window.cancelAnimationFrame(requestID);
-	var rectWidth= 100;
-	var rectHeight = 50;
 
-	var rectX = Math.floor( Math.random() * (c.width- rectWidth));
-	var rectY = Math.floor( Math.random() * (c.height- rectHeight));
+var dvdLogoSetup = function(){
+  window.cancelAnimationFrame(requestID);
+  var rectWidth = 100;
+  var rectHeight = 50;
+  var rectX = Math.floor(Math.random()*(c.width-rectWidth));
+  var rectY = Math.floor(Math.random()*(c.height-rectHeight));
+  var xVel = 1;
+  var yVel = 1;
+  var logo = new Image();
+  logo.src = "logo_dvd.jpg";
+  var dvdLogo = function(){
+    // if (requestID){
+    //   stopIt();
+    // }
+    clear(ctx);
+    ctx.drawImage(logo, rectX, rectY, rectWidth, rectHeight);
 
-	var xVel = 1;
-	var yVel = 1;
-	
-
-	var logo = new Image();
-	logo.src = "logo_dvd.jpg"; 
-	ctx.drawImage(logo,0,0,rectWidth, rectHeight);
-
-    var dvdLogo = function(){
-	logo.moveTo(logo.offsetX+xVel, logo.offsetY+yVel)
-	requestID = window.requestAnimationFrame(dvdLogoSetup);
-    };
-    dvdLogo(); 
+    if (rectX>=c.width-rectWidth){
+			rectX-=xVel;
+     }
+		if (rectX<0){
+			rectX+=xVel;
+			}
+     if (rectY>=c.height-rectHeight){
+      rectY-=yVel;
+     }
+		 if (rectY<0){
+			 rectY-=yVel;
+			 }
+			rectX+=xVel
+			rectY+=yVel
+    requestID = window.requestAnimationFrame(dvdLogo);
+  }
+  dvdLogo();
 }
-
-//var dvdMove= function(){
-    //if 
-    //logo.moveTo(
-//}
-//var dvd_does_stuff = function(){
-    //dvdlogoSetup();
-
-dvd_but.addEventListener("click",dvdLogoSetup);
+dvdButton = document.getElementById("dvd");
+dvdButton.addEventListener("click",// function(e){
+dvdLogoSetup//();
+)
