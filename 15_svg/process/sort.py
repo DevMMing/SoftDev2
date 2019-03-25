@@ -34,7 +34,7 @@ final = sorted(data, key=lambda x:int(x[1]))
 out = ''
 for i in final:
     if len(i) == 3:
-        out += i[0] + ',' + i[1] + ',' + i[2] + '\n'
+        out += i[1] + ',' + i[2] + '\n'
 
 
 nice = open('data.csv', 'w')
